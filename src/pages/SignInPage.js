@@ -10,7 +10,7 @@ export default function SignInPage() {
   const navigate = useNavigate()
   const {user, setUser} = useContext(UserContext)
 
-  console.log(user)
+  console.log(form)
 
   function handleForm(e){
     setForm({...form, [e.target.name]: e.target.value})
@@ -19,8 +19,9 @@ export default function SignInPage() {
   function handleLogin(e){
     e.preventDefault()
 
-    login(form)
-    .then(res => {
+    const promise = axios.post(`${process.env.REACT_APP_API_URL}/`,form)
+
+    promise.then((res) => {
       const {idUser, name, token} = res.data
       setUser({idUser, name, token})
       navigate("/home")
@@ -30,10 +31,7 @@ export default function SignInPage() {
     }) 
   }
 
-  function login(body){
-    const promise = axios.post(process.env.REACT_APP_API_URL, body)
-    return promise
-  }
+ 
 
   return (
     <SingInContainer>

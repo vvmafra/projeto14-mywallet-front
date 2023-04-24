@@ -2,9 +2,11 @@ import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 import { Link, useNavigate } from "react-router-dom"
-import { useEffect } from "react"
+import { useContext } from "react"
+import { UserContext } from "../contexts/UserContext"
 
 export default function HomePage() {
+  const {user} = useContext(UserContext)
   const navigate = useNavigate()
 
   function exit(e){
@@ -19,7 +21,7 @@ export default function HomePage() {
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, Fulano</h1>
+        <h1>{`Olá, ${user.name}`}</h1>
         <BiExit onClick={exit}/>
       </Header>
 

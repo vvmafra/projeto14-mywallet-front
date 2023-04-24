@@ -16,11 +16,11 @@ export default function SignUpPage() {
     e.preventDefault()
 
     register(form)
-    .then(res => {
+    .then(() => {
       navigate("/")
     })
-    .catch(err => {
-      alert(err.response.data.message)
+    .catch(() => {
+      alert("Error trying to signing up")
     })
     
   }
@@ -64,10 +64,9 @@ export default function SignUpPage() {
         />
 
         <input 
-          name="confirme-password"
+          name="passwordConfirmation"
           placeholder="Confirm Password" 
           type="password"
-          required
           value={form.passwordConfirmation}
           onChange={handleForm}
         />
