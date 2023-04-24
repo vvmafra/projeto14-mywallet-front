@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 import { Link, useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 
 export default function HomePage() {
   const navigate = useNavigate()
@@ -10,6 +11,10 @@ export default function HomePage() {
     e.preventDefault()
     navigate("/")
   }
+
+  // useEffect(()=> {
+  //   axios.get(`${process.env.REACT_APP_API_URL}/transactions`.then)
+  // }, [])
 
   return (
     <HomeContainer>

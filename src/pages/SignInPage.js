@@ -1,24 +1,64 @@
 import styled from "styled-components"
 import { Link, useNavigate } from "react-router-dom"
 import MyWalletLogo from "../components/MyWalletLogo"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import axios from 'axios';
+import { UserContext } from "../contexts/UserContext";
 
 export default function SignInPage() {
+  const [form, setForm] = useState({email: "", password: ""})
   const navigate = useNavigate()
+  const {user, setUser} = useContext(UserContext)
+
+  console.log(user)
+
+  function handleForm(e){
+    setForm({...form, [e.target.name]: e.target.value})
+  }
 
   function handleLogin(e){
-    
     e.preventDefault()
-    navigate("/home")
 
+    login(form)
+    .then(res => {
+      const {idUser, name, token} = res.data
+      setUser({idUser, name, token})
+    })
+    .catch(err => {
+      console.log(err.response.data)
+    })
+    navigate("/home")
   }
+
+  function login(body){
+    const promise = axios.post(process.env.REACT_APP_API_URL, body)
+    return promise
+  }
+
   return (
     <SingInContainer>
       <form onSubmit={handleLogin}>
         <MyWalletLogo />
-        <input placeholder="E-mail" type="email" />
-        <input placeholder="Senha" type="password" autocomplete="new-password" />
-        <button>Entrar</button>
+        <input
+          name="email"
+          placeholder="E-mail" 
+          type="email"
+          required
+          value={form.email}
+          onChange={handleForm} 
+        />
+
+        <input
+          name="password"
+          placeholder="Senha" 
+          type="password" 
+          required
+          autocomplete="new-password"
+          value={form.password}
+          onChange={handleForm} 
+        />
+
+        <button type="submit">Entrar</button>
       </form>
 
       <Link to="/cadastro">
