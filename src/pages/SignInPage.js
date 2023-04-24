@@ -23,11 +23,11 @@ export default function SignInPage() {
     .then(res => {
       const {idUser, name, token} = res.data
       setUser({idUser, name, token})
+      navigate("/home")
     })
     .catch(err => {
-      console.log(err.response.data)
-    })
-    navigate("/home")
+      alert(err.response.data.message)
+    }) 
   }
 
   function login(body){
@@ -50,7 +50,7 @@ export default function SignInPage() {
 
         <input
           name="password"
-          placeholder="Senha" 
+          placeholder="Password" 
           type="password" 
           required
           autocomplete="new-password"
