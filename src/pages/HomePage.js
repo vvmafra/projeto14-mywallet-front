@@ -2,21 +2,50 @@ import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 import { Link, useNavigate } from "react-router-dom"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../contexts/UserContext"
+import axios from "axios"
 
 export default function HomePage() {
   const {user} = useContext(UserContext)
+  const [trasactions, setTransactions] = useState([])
   const navigate = useNavigate()
+  let totalAmount = 0
+
+  useEffect(showTransactions, [])
 
   function exit(e){
     e.preventDefault()
     navigate("/")
   }
 
-  // useEffect(()=> {
-  //   axios.get(`${process.env.REACT_APP_API_URL}/transactions`.then)
-  // }, [])
+  function showTransactions(){
+    getTransactions(user.token)
+    .then(res => {
+      console.log(res.data)
+      setTransactions(res.data)
+    })
+    .catch(err => {
+      alert(err.response.data.message)
+    })
+  }
+
+  function createConfig(token){
+    return {
+      headers: {
+        Authorization: `Bearer ${token}`
+      } }
+  }
+
+  function getTransactions(token) {
+    const promise = axios.get(`${process.env.REACT_APP_API_URL}/transactions`,createConfig(token))
+    return promise
+    }
+
+  function checkNumber(number){
+    if(number > 0) return "positivo"
+    return "negativo"
+  }
 
   return (
     <HomeContainer>
@@ -27,28 +56,30 @@ export default function HomePage() {
 
       <TransactionsContainer>
         <ul>
-          <ListItemContainer>
-            <div>
-              <span>30/11</span>
-              <strong>Almoço mãe</strong>
-            </div>
-            <Value color={"negativo"}>120,00</Value>
-          </ListItemContainer>
-
-          <ListItemContainer>
-            <div>
-              <span>15/11</span>
-              <strong>Salário</strong>
-            </div>
-            <Value color={"positivo"}>3000,00</Value>
-          </ListItemContainer>
+          {trasactions.map(t => {
+            totalAmount = totalAmount + t.amount
+            return (
+            <ListItemContainer key={t._id}>
+              <div>
+                <span>{t.data}</span>
+                <strong>{t.description}</strong>
+              </div>
+              <Value color={checkNumber(t.amount)}>{t.amount}</Value>
+            </ListItemContainer>)
+        })}
+         
         </ul>
 
         <article>
           <strong>Saldo</strong>
-          <Value color={"positivo"}>2880,00</Value>
+          <Value color={checkNumber(totalAmount)}>{totalAmount}</Value>
         </article>
       </TransactionsContainer>
+
+      
+
+        
+            
 
 
       <ButtonsContainer>
