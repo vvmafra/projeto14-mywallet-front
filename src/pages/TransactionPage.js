@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { Link } from "react-router-dom"
 
 export default function TransactionsPage() {
   return (
@@ -7,7 +8,11 @@ export default function TransactionsPage() {
       <form>
         <input placeholder="Valor" type="text"/>
         <input placeholder="Descrição" type="text" />
-        <button>Salvar TRANSAÇÃO</button>
+        <button>
+          <Link to="/home">
+          Salvar TRANSAÇÃO
+          </Link>
+          </button>
       </form>
     </TransactionsContainer>
   )
