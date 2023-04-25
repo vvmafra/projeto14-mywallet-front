@@ -74,18 +74,20 @@ export default function HomePage(props) {
       <TransactionsContainer>
         <ScrollContainer>
           <ul>
-            {trasactions.map(t => {
-              
-              return (
-              <ListItemContainer key={t._id}>
-                <div>
-                  <span>{t.data}</span>
-                  <strong>{t.description}</strong>
-                </div>
-                <Value 
-                typeTransaction={t.typeTransaction}>{t.amount}</Value>
-              </ListItemContainer>)
-          }).reverse()}
+            {trasactions.length === 0 ? (
+              <p>Não há registros de entrada ou saída</p>
+            ) : (
+              trasactions.map(t => (
+                <ListItemContainer key={t._id}>
+                  <div>
+                    <span>{t.data}</span>
+                    <strong>{t.description}</strong>
+                  </div>
+                  <Value 
+                  typeTransaction={t.typeTransaction}>{t.amount}</Value>
+                </ListItemContainer>)
+            )).reverse()}
+            
           
           </ul>
         </ScrollContainer>
@@ -156,6 +158,10 @@ const ScrollContainer = styled.div`
   position: relative;
   overflow: scroll;
   height: 70vh;
+  p {
+    text-align: center;
+    color: #868686;
+  }
 `
 const ButtonsContainer = styled.section`
   margin-top: 15px;
