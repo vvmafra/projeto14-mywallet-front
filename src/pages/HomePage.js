@@ -38,7 +38,6 @@ export default function HomePage(props) {
 
     const promise = axios.get(`${process.env.REACT_APP_API_URL}/transactions`,config)
     promise.then(res => {
-      console.log(res.data)
       setTransactions(res.data)
     })
     .catch(err => {
@@ -46,17 +45,17 @@ export default function HomePage(props) {
     })
   }
 
+  function changeTypeIncome(){
+    props.setTypeTransaction("entrada")
+    navigate("/nova-transacao/entrada")
+    return props.typeTransaction
+  }
 
   function changeTypeOutcome(){
     props.setTypeTransaction("saida")
+    navigate("/nova-transacao/saida")
     return props.typeTransaction
   }
-
-  function changeTypeIncome(){
-    props.setTypeTransaction("entrada")
-    return props.typeTransaction
-  }
-
 
   function check(){
     if (totalAmount >= 0) {
@@ -73,21 +72,23 @@ export default function HomePage(props) {
       </Header>
 
       <TransactionsContainer>
-        <ul>
-          {trasactions.map(t => {
-            
-            return (
-            <ListItemContainer key={t._id}>
-              <div>
-                <span>{t.data}</span>
-                <strong>{t.description}</strong>
-              </div>
-              <Value 
-              typeTransaction={t.typeTransaction}>{t.amount}</Value>
-            </ListItemContainer>)
-        }).reverse()}
-         
-        </ul>
+        <ScrollContainer>
+          <ul>
+            {trasactions.map(t => {
+              
+              return (
+              <ListItemContainer key={t._id}>
+                <div>
+                  <span>{t.data}</span>
+                  <strong>{t.description}</strong>
+                </div>
+                <Value 
+                typeTransaction={t.typeTransaction}>{t.amount}</Value>
+              </ListItemContainer>)
+          }).reverse()}
+          
+          </ul>
+        </ScrollContainer>
 
         <article>
           <strong>Saldo</strong>
@@ -98,18 +99,14 @@ export default function HomePage(props) {
     
       <ButtonsContainer>
           <button onClick={changeTypeIncome}>
-            <Link to="/nova-transacao/entrada">
               <AiOutlinePlusCircle />
               <p>Nova <br /> entrada</p>
-            </Link>
           </button>
         
         
           <button onClick={changeTypeOutcome}>
-            <Link to="/nova-transacao/saida" >
               <AiOutlineMinusCircle />
               <p>Nova <br />saída</p>
-            </Link>
           </button>
         
       </ButtonsContainer>
@@ -141,21 +138,30 @@ const TransactionsContainer = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  
   article {
     display: flex;
-    justify-content: space-between;   
+    justify-content: space-between;
+    position: relative;
+    bottom: 0;
+    right: 0;
     strong {
       font-weight: 700;
       text-transform: uppercase;
     }
   }
 `
+
+const ScrollContainer = styled.div`
+  position: relative;
+  overflow: scroll;
+  height: 70vh;
+`
 const ButtonsContainer = styled.section`
   margin-top: 15px;
   margin-bottom: 0;
   display: flex;
   gap: 15px;
-  position: relative;
   
   button {
     width: 50%;
