@@ -6,11 +6,21 @@ import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../contexts/UserContext"
 import axios from "axios"
 
-export default function HomePage() {
+export default function HomePage(props) {
   const {user} = useContext(UserContext)
   const [trasactions, setTransactions] = useState([])
-  const navigate = useNavigate()
   let totalAmount = 0
+  const navigate = useNavigate()
+
+  trasactions.map((a) => {
+    let typeTransaction = a.typeTransaction
+    if (typeTransaction === "entrada") {
+      totalAmount += Number(a.amount)
+    } else {
+      totalAmount -= Number(a.amount)
+    }
+    return totalAmount
+  })
 
   useEffect(showTransactions, [])
 
@@ -20,8 +30,13 @@ export default function HomePage() {
   }
 
   function showTransactions(){
-    getTransactions(user.token)
-    .then(res => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`
+      } }
+
+    const promise = axios.get(`${process.env.REACT_APP_API_URL}/transactions`,config)
+    promise.then(res => {
       console.log(res.data)
       setTransactions(res.data)
     })
@@ -30,22 +45,24 @@ export default function HomePage() {
     })
   }
 
-  function createConfig(token){
-    return {
-      headers: {
-        Authorization: `Bearer ${token}`
-      } }
+
+  function changeTypeOutcome(){
+    props.setTypeTransaction("saida")
+    return props.typeTransaction
   }
 
-  function getTransactions(token) {
-    const promise = axios.get(`${process.env.REACT_APP_API_URL}/transactions`,createConfig(token))
-    return promise
-    }
-
-  function checkNumber(number){
-    if(number > 0) return "positivo"
-    return "negativo"
+  function changeTypeIncome(){
+    props.setTypeTransaction("entrada")
+    return props.typeTransaction
   }
+
+
+  function check(){
+    if (totalAmount >= 0) {
+      return "entrada"
+    } return "saida"
+  }
+
 
   return (
     <HomeContainer>
@@ -57,33 +74,29 @@ export default function HomePage() {
       <TransactionsContainer>
         <ul>
           {trasactions.map(t => {
-            totalAmount = totalAmount + t.amount
+            
             return (
             <ListItemContainer key={t._id}>
               <div>
                 <span>{t.data}</span>
                 <strong>{t.description}</strong>
               </div>
-              <Value color={checkNumber(t.amount)}>{t.amount}</Value>
+              <Value 
+              typeTransaction={t.typeTransaction}>{t.amount}</Value>
             </ListItemContainer>)
-        })}
+        }).reverse()}
          
         </ul>
 
         <article>
           <strong>Saldo</strong>
-          <Value color={checkNumber(totalAmount)}>{totalAmount}</Value>
+          <Value typeTransaction={check()}>{parseFloat(totalAmount).toFixed(2)}</Value>
         </article>
       </TransactionsContainer>
 
-      
-
-        
-            
-
-
+    
       <ButtonsContainer>
-          <button>
+          <button onClick={changeTypeIncome}>
             <Link to="/nova-transacao/entrada">
               <AiOutlinePlusCircle />
               <p>Nova <br /> entrada</p>
@@ -91,8 +104,8 @@ export default function HomePage() {
           </button>
         
         
-          <button>
-            <Link to="/nova-transacao/saida">
+          <button onClick={changeTypeOutcome}>
+            <Link to="/nova-transacao/saida" >
               <AiOutlineMinusCircle />
               <p>Nova <br />saída</p>
             </Link>
@@ -158,7 +171,7 @@ const ButtonsContainer = styled.section`
 const Value = styled.div`
   font-size: 16px;
   text-align: right;
-  color: ${(props) => (props.color === "positivo" ? "green" : "red")};
+  color: ${(props) => (props.typeTransaction === "entrada" ? "green" : "red")};
 `
 const ListItemContainer = styled.li`
   display: flex;

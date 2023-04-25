@@ -24,6 +24,7 @@ export default function SignInPage() {
     promise.then((res) => {
       const {idUser, name, token} = res.data
       setUser({idUser, name, token})
+      localStorage.setItem("user", JSON.stringify({idUser, name, token}))
       navigate("/home")
     })
     .catch(err => {
