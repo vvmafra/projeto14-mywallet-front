@@ -15,6 +15,8 @@ export default function SignUpPage() {
   function handleSignUp(e){
     e.preventDefault()
 
+    if (form.password !== form.passwordConfirmation) return alert("Password and Password confirmation does not match")
+
     register(form)
     .then(() => {
       navigate("/")

@@ -8,9 +8,7 @@ import { UserContext } from "../contexts/UserContext";
 export default function SignInPage() {
   const [form, setForm] = useState({email: "", password: ""})
   const navigate = useNavigate()
-  const {user, setUser} = useContext(UserContext)
-
-  console.log(form)
+  const {setUser} = useContext(UserContext)
 
   function handleForm(e){
     setForm({...form, [e.target.name]: e.target.value})
@@ -28,7 +26,7 @@ export default function SignInPage() {
       navigate("/home")
     })
     .catch(err => {
-      alert(err.response.data.message)
+      alert(err.response.data)
     }) 
   }
 

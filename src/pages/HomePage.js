@@ -26,6 +26,7 @@ export default function HomePage(props) {
 
   function exit(e){
     e.preventDefault()
+    localStorage.setItem("user", JSON.stringify({}))
     navigate("/")
   }
 
@@ -41,7 +42,7 @@ export default function HomePage(props) {
       setTransactions(res.data)
     })
     .catch(err => {
-      alert(err.response.data.message)
+      alert(err.response.data)
     })
   }
 
@@ -154,6 +155,7 @@ const ButtonsContainer = styled.section`
   margin-bottom: 0;
   display: flex;
   gap: 15px;
+  position: relative;
   
   button {
     width: 50%;

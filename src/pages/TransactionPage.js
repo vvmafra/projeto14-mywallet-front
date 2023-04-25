@@ -21,12 +21,11 @@ export default function TransactionsPage(props) {
       return alert("Invalid Number")
     }
     const body = {amount: valueAmount, description: valueDescription, typeTransaction: props.typeTransaction}
-    console.log(body)
     const promise = axios.post(`${process.env.REACT_APP_API_URL}/transactions`,body, config)
     
     promise
     .then(() => navigate("/home"))
-    .catch((err) => alert("Request failed"))
+    .catch((err) => alert(err.response.data))
   }
 
   return (
