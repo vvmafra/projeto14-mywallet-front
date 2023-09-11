@@ -1,5 +1,6 @@
 # My Wallet Project
-Financial manager website to track revenues and expenses. It helps to understands how you spent your money and know how much you have.
+- Financial manager website to track revenues and expenses. It helps to understands how you spent your money and know how much you have.
+- You can test accessing the deploy: https://projeto14-mywallet-front-alpha-seven.vercel.app/
 
 ## About
 Features implemented for this web application:
