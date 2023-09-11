@@ -14,4 +14,5 @@ Using this app, you can track all your financial movements and see how is your c
 ## Technologies
 To build this project, the following technologies where used:
 Front-end
+
 ![StyledComponents]( https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)&nbsp;
