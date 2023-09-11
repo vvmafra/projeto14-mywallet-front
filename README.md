@@ -14,7 +14,7 @@ Using this app, you can track all your financial movements and see how is your c
 ## Technologies
 To build this project, the following technologies where used:
 #### Front-end:
-- React libraries: react-icons, react-router-dom;
+- Libraries: react-icons, react-router-dom;
 
 ![JS](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)&nbsp;
 ![StyledComponents]( https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)&nbsp;
@@ -28,3 +28,7 @@ To build this project, the following technologies where used:
 ![JS](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)&nbsp;
 ![ExpressJS](https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white)&nbsp;
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)&nbsp;
+
+## How to use
+1. Clone this repository
+2. Clone my Wallet back-end repository: https://github.com/vvmafra/projeto14-mywallet-back
