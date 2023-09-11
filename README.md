@@ -33,18 +33,15 @@ To build this project, the following technologies where used:
 ## How to use
 
 1. Clone my Wallet back-end repository: https://github.com/vvmafra/projeto14-mywallet-back :
-   
-  1.1. Install dependecies with: npm i
-  
-  1.2. Run the back-end repository with: npm run dev
+
+   1. Install dependecies with: npm i &nbsp;
+   2. Run the back-end repository with: npm run dev
   
 2. Clone this repository: ttps://github.com/vvmafra/projeto14-mywallet-front :
 
-  2.1. Install dependecies with: npm i
-   
-  2.2. Run the back-end repository with: npm run start
-  
-  2.3. You can optionally build the project running: npm run build
+   1. Install dependecies with: npm i
+   2. Run the back-end repository with: npm run start
+   3. You can optionally build the project running: npm run build
   
 3. Access http://localhost:5000 on your browser (Except Internet Explorer)
 
