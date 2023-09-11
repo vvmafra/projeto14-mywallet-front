@@ -37,7 +37,7 @@ To build this project, the following technologies where used:
    1. Install dependecies with: npm i &nbsp;
    2. Run the back-end repository with: npm run dev
   
-2. Clone this repository: ttps://github.com/vvmafra/projeto14-mywallet-front :
+2. Clone this repository: https://github.com/vvmafra/projeto14-mywallet-front :
 
    1. Install dependecies with: npm i
    2. Run the back-end repository with: npm run start
